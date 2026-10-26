@@ -1,0 +1,2206 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#172554" />
+    <title>پخش‌یار | مدیریت هوشمند پخش</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --brand: #2563eb;
+        --brand-dark: #172554;
+        --brand-deep: #0f172a;
+        --brand-soft: #dbeafe;
+        --accent: #e2a64b;
+        --bg: #f4f7fb;
+        --surface: #fff;
+        --text: #1e293b;
+        --muted: #64748b;
+        --line: #e2e8f0;
+        --green: #2563eb;
+        --red: #c24f49;
+        --amber: #b45309;
+        --blue: #2563eb;
+        --shadow: 0 10px 30px rgba(25, 57, 43, 0.055);
+        --radius: 18px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Vazirmatn", Tahoma, sans-serif;
+        font-size: 15px;
+        line-height: 1.8;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 3px solid #e2a64b;
+        outline-offset: 2px;
+      }
+      .app {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+      }
+      .sidebar {
+        background: linear-gradient(
+          180deg,
+          var(--brand-dark),
+          var(--brand-deep)
+        );
+        color: #fff;
+        padding: 26px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 8px;
+      }
+      .brand-mark {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(145deg, #dbeafe, #93c5fd);
+        color: var(--brand-dark);
+        border-radius: 15px;
+        box-shadow: 0 7px 20px #17255440;
+      }
+      .brand-mark svg {
+        width: 27px;
+        height: 27px;
+      }
+      .brand-name {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+      }
+      .brand-caption {
+        font-size: 11px;
+        color: #bfdbfe;
+        margin-top: -5px;
+      }
+      .nav-label {
+        font-size: 11px;
+        color: #93c5fd;
+        padding: 0 13px;
+        margin-bottom: 8px;
+      }
+      .nav {
+        display: grid;
+        gap: 6px;
+      }
+      .nav-btn {
+        border: 0;
+        background: transparent;
+        color: #cbd5e1;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        text-align: right;
+        font-weight: 600;
+        transition: 0.18s;
+      }
+      .nav-btn svg {
+        width: 20px;
+        height: 20px;
+        flex: none;
+      }
+      .nav-btn:hover {
+        background: #ffffff12;
+        color: #fff;
+      }
+      .nav-btn.active {
+        background: #ffffff18;
+        color: #fff;
+        box-shadow: inset -3px 0 #93c5fd;
+      }
+      .nav-btn.active svg {
+        color: #93c5fd;
+      }
+      .sidebar-bottom {
+        margin-top: auto;
+        border: 1px solid #ffffff1b;
+        background: #ffffff0b;
+        border-radius: 15px;
+        padding: 15px;
+      }
+      .demo-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: #fde68a;
+        background: #ffffff12;
+        border: 1px solid #ffffff20;
+        border-radius: 99px;
+        padding: 3px 9px;
+      }
+      .demo-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #f59e0b;
+      }
+      .sidebar-bottom p {
+        font-size: 12px;
+        color: #cbd5e1;
+        margin: 9px 0 0;
+      }
+      .main {
+        min-width: 0;
+      }
+      .topbar {
+        height: 82px;
+        padding: 0 34px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .breadcrumb {
+        font-size: 12px;
+        color: var(--muted);
+        display: flex;
+        gap: 9px;
+        align-items: center;
+      }
+      .breadcrumb strong {
+        color: var(--text);
+        font-size: 14px;
+      }
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .icon-btn {
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--line);
+        background: #fff;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        color: #475569;
+        position: relative;
+      }
+      .icon-btn svg {
+        width: 19px;
+        height: 19px;
+      }
+      .notification-dot {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #d96856;
+        top: 8px;
+        left: 9px;
+        border: 1px solid #fff;
+      }
+      .profile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-right: 1px solid var(--line);
+        padding-right: 15px;
+      }
+      .avatar {
+        width: 41px;
+        height: 41px;
+        display: grid;
+        place-items: center;
+        background: #dbeafe;
+        color: var(--brand);
+        border-radius: 14px;
+        font-weight: 800;
+      }
+      .profile-name {
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .profile-role {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: -4px;
+      }
+      .content {
+        padding: 30px 34px 42px;
+        max-width: 1500px;
+        margin: auto;
+      }
+      .page-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 24px;
+      }
+      .eyebrow {
+        color: var(--green);
+        font-weight: 700;
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+      h1 {
+        font-size: 26px;
+        line-height: 1.5;
+        letter-spacing: -0.7px;
+        margin: 0;
+        font-weight: 800;
+      }
+      .subtitle {
+        color: var(--muted);
+        font-size: 13px;
+        margin: 4px 0 0;
+      }
+      .primary-btn,
+      .secondary-btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 9px;
+        border-radius: 12px;
+        padding: 11px 17px;
+        font-weight: 700;
+        border: 1px solid transparent;
+        transition: 0.18s;
+        white-space: nowrap;
+      }
+      .primary-btn {
+        background: var(--brand);
+        color: #fff;
+        box-shadow: 0 5px 14px #2563eb20;
+      }
+      .primary-btn:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+      }
+      .secondary-btn {
+        background: #fff;
+        border-color: var(--line);
+        color: #334155;
+      }
+      .secondary-btn:hover {
+        background: #f8fafc;
+      }
+      .primary-btn svg,
+      .secondary-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin-bottom: 19px;
+      }
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px;
+        box-shadow: var(--shadow);
+        min-width: 0;
+      }
+      .stat-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .stat-icon {
+        width: 43px;
+        height: 43px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+      }
+      .stat-icon svg {
+        width: 21px;
+        height: 21px;
+      }
+      .i-green {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .i-amber {
+        background: #fff2df;
+        color: #b45309;
+      }
+      .i-blue {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .i-red {
+        background: #fcebea;
+        color: #b94c46;
+      }
+      .stat-label {
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 600;
+        margin-top: 16px;
+      }
+      .stat-value {
+        font-size: 25px;
+        font-weight: 800;
+        letter-spacing: -0.6px;
+        margin-top: 2px;
+        line-height: 1.5;
+      }
+      .stat-foot {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 7px;
+      }
+      .trend {
+        color: var(--green);
+        font-weight: 700;
+      }
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr);
+        gap: 18px;
+        margin-bottom: 19px;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        min-width: 0;
+      }
+      .panel-header {
+        padding: 20px 22px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+      }
+      .panel-title {
+        font-size: 16px;
+        font-weight: 800;
+        margin: 0;
+      }
+      .panel-subtitle {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .panel-body {
+        padding: 0 22px 22px;
+      }
+      .select-small {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        color: #475569;
+        padding: 7px 10px;
+        font-size: 12px;
+      }
+      .chart-summary {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin: 2px 0 16px;
+      }
+      .chart-total {
+        font-size: 25px;
+        font-weight: 800;
+      }
+      .chart-change {
+        font-size: 11px;
+        color: var(--green);
+        font-weight: 700;
+      }
+      .chart {
+        height: 180px;
+        display: flex;
+        align-items: stretch;
+        gap: 13px;
+        padding: 10px 3px 0;
+        border-bottom: 1px solid var(--line);
+        background: repeating-linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent 43px,
+          #e2e8f0 44px,
+          #e2e8f0 45px
+        );
+      }
+      .chart-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        min-width: 0;
+      }
+      .bar-wrap {
+        height: 145px;
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 4px;
+      }
+      .bar {
+        width: min(23px, 43%);
+        border-radius: 7px 7px 2px 2px;
+        background: #bfdbfe;
+        transition: height 0.35s;
+      }
+      .bar.strong {
+        background: var(--brand);
+      }
+      .chart-label {
+        font-size: 10px;
+        color: var(--muted);
+        padding-bottom: 10px;
+      }
+      .chart-legend {
+        display: flex;
+        gap: 16px;
+        margin-top: 13px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .legend-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 3px;
+        margin-left: 5px;
+        background: var(--brand);
+      }
+      .legend-dot.pale {
+        background: #bfdbfe;
+      }
+      .task-list {
+        display: grid;
+        gap: 13px;
+      }
+      .task {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding-bottom: 13px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .task:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+      .task-icon {
+        width: 38px;
+        height: 38px;
+        flex: none;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: #eff6ff;
+        color: var(--brand);
+      }
+      .task-icon svg {
+        width: 19px;
+        height: 19px;
+      }
+      .task-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .task-title {
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .task-desc {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .task-count {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--brand);
+        background: var(--brand-soft);
+        border-radius: 9px;
+        padding: 3px 9px;
+        white-space: nowrap;
+      }
+      .table-panel {
+        overflow: hidden;
+      }
+      .table-wrap {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        white-space: nowrap;
+      }
+      th {
+        text-align: right;
+        background: #f8fafc;
+        color: #64748b;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 13px 22px;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      td {
+        padding: 15px 22px;
+        border-bottom: 1px solid #e2e8f0;
+        font-size: 12px;
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      tbody tr:hover {
+        background: #f8fafc;
+      }
+      .order-id {
+        font-weight: 800;
+        color: #1e40af;
+        direction: ltr;
+        display: inline-block;
+      }
+      .customer-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .customer-avatar {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 11px;
+        background: #dbeafe;
+        color: #1d4ed8;
+        font-weight: 800;
+        font-size: 12px;
+      }
+      .customer-name {
+        font-weight: 700;
+      }
+      .customer-sub {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .amount {
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+      }
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 99px;
+        padding: 5px 10px;
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .status:before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .status.ready {
+        background: #fff2dd;
+        color: #b45309;
+      }
+      .status.transit {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .status.done {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .table-link {
+        border: 0;
+        background: transparent;
+        color: var(--green);
+        font-weight: 700;
+        font-size: 11px;
+      }
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 13px;
+        margin-bottom: 19px;
+      }
+      .quick-action {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-align: right;
+        color: var(--text);
+        transition: 0.18s;
+      }
+      .quick-action:hover {
+        border-color: #93c5fd;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+      .quick-icon {
+        width: 41px;
+        height: 41px;
+        flex: none;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        background: var(--brand-soft);
+        color: var(--brand);
+      }
+      .quick-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+      .quick-title {
+        font-weight: 800;
+        font-size: 12px;
+      }
+      .quick-desc {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .page-view {
+        display: none;
+      }
+      .page-view.active {
+        display: block;
+      }
+      .list-toolbar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px 16px;
+      }
+      .search {
+        width: min(340px, 100%);
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: #fff;
+        padding: 10px 13px;
+        outline: none;
+        color: var(--text);
+      }
+      .search:focus {
+        border-color: #93c5fd;
+        box-shadow: 0 0 0 3px #2563eb12;
+      }
+      .stock-low {
+        color: var(--red);
+        font-weight: 800;
+      }
+      .stock-ok {
+        color: var(--green);
+        font-weight: 800;
+      }
+      .finance-banner {
+        background: linear-gradient(120deg, #1e40af, #2563eb);
+        color: white;
+        border-radius: 18px;
+        padding: 25px;
+        margin-bottom: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+      .finance-banner .label {
+        color: #dbeafe;
+        font-size: 12px;
+      }
+      .finance-banner .big {
+        font-size: 28px;
+        font-weight: 800;
+      }
+      .empty {
+        padding: 32px;
+        text-align: center;
+        color: var(--muted);
+      }
+      .footer-note {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 10px;
+        margin-top: 24px;
+      }
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: #10251dcc;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        z-index: 10;
+      }
+      .modal-backdrop.open {
+        display: flex;
+      }
+      .modal {
+        width: min(500px, 100%);
+        background: #fff;
+        border-radius: 22px;
+        padding: 25px;
+        box-shadow: 0 24px 80px #0f172a45;
+        max-height: 90vh;
+        overflow: auto;
+      }
+      .modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .modal h2 {
+        font-size: 20px;
+        margin: 0;
+      }
+      .close-btn {
+        border: 0;
+        background: #f1f5f9;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        font-size: 22px;
+        color: #475569;
+      }
+      .form-grid {
+        display: grid;
+        gap: 14px;
+      }
+      .form-field {
+        display: grid;
+        gap: 6px;
+      }
+      .form-field label {
+        font-size: 12px;
+        font-weight: 700;
+        color: #334155;
+      }
+      .form-field input,
+      .form-field select {
+        width: 100%;
+        border: 1px solid #cbd5e1;
+        border-radius: 11px;
+        padding: 11px 12px;
+        background: #fff;
+        color: var(--text);
+      }
+      .form-help {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .modal-actions > * {
+        flex: 1;
+      }
+      .toast {
+        position: fixed;
+        bottom: 22px;
+        left: 22px;
+        background: #172554;
+        color: #fff;
+        border-radius: 12px;
+        padding: 13px 18px;
+        box-shadow: 0 10px 30px #17255440;
+        z-index: 20;
+        display: none;
+        font-size: 13px;
+      }
+      .toast.show {
+        display: block;
+      }
+      .mobile-brand {
+        display: none;
+      }
+      @media (max-width: 1150px) {
+        .stats {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+        .app {
+          grid-template-columns: 225px minmax(0, 1fr);
+        }
+        .content {
+          padding: 25px 22px;
+        }
+      }
+      @media (max-width: 800px) {
+        .app {
+          display: block;
+        }
+        .sidebar {
+          display: none;
+        }
+        .topbar {
+          height: 70px;
+          padding: 0 18px;
+        }
+        .mobile-brand {
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          font-weight: 800;
+          color: var(--brand);
+        }
+        .mobile-brand .brand-mark {
+          width: 36px;
+          height: 36px;
+          border-radius: 11px;
+        }
+        .breadcrumb {
+          display: none;
+        }
+        .content {
+          padding: 22px 15px 32px;
+        }
+        .page-heading {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .page-heading .primary-btn {
+          width: 100%;
+        }
+        .quick-actions {
+          grid-template-columns: 1fr;
+        }
+        .stats {
+          gap: 10px;
+        }
+        .stat-card {
+          padding: 15px;
+        }
+        .stat-value {
+          font-size: 21px;
+        }
+        .panel-header {
+          padding: 17px 16px 12px;
+        }
+        .panel-body {
+          padding: 0 16px 18px;
+        }
+        .list-toolbar {
+          padding: 0 16px 14px;
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .search {
+          width: 100%;
+        }
+        th,
+        td {
+          padding: 12px 15px;
+        }
+        .profile {
+          border: 0;
+          padding: 0;
+        }
+        .profile-info {
+          display: none;
+        }
+        .finance-banner {
+          padding: 20px;
+        }
+        .finance-banner .big {
+          font-size: 22px;
+        }
+      }
+      @media (max-width: 420px) {
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stat-card {
+          padding: 12px;
+        }
+        .stat-value {
+          font-size: 18px;
+        }
+        .stat-label {
+          font-size: 11px;
+        }
+        .stat-icon {
+          width: 36px;
+          height: 36px;
+        }
+        .top-actions {
+          gap: 7px;
+        }
+        h1 {
+          font-size: 23px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-boxes" viewBox="0 0 24 24">
+        <path
+          d="m12 3 9 5-9 5-9-5 9-5Z M3 8v9l9 5 9-5V8 M12 13v9"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24">
+        <rect
+          x="3"
+          y="3"
+          width="7"
+          height="7"
+          rx="1.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        />
+        <rect
+          x="14"
+          y="3"
+          width="7"
+          height="7"
+          rx="1.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        />
+        <rect
+          x="3"
+          y="14"
+          width="7"
+          height="7"
+          rx="1.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        />
+        <rect
+          x="14"
+          y="14"
+          width="7"
+          height="7"
+          rx="1.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        />
+      </symbol>
+      <symbol id="i-cart" viewBox="0 0 24 24">
+        <circle
+          cx="9"
+          cy="20"
+          r="1"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        />
+        <circle
+          cx="19"
+          cy="20"
+          r="1"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        />
+        <path
+          d="M2 3h2l3 12h12l3-9H5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol id="i-users" viewBox="0 0 24 24">
+        <path
+          d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 8v6 M23 11h-6 M16 3.2a4 4 0 0 1 0 7.6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+        />
+      </symbol>
+      <symbol id="i-package" viewBox="0 0 24 24">
+        <path
+          d="m12 3 9 5-9 5-9-5 9-5ZM3 8v9l9 5 9-5V8 M12 13v9 M7.5 5.5l9 5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol id="i-truck" viewBox="0 0 24 24">
+        <path
+          d="M3 5h11v12H3z M14 9h4l3 4v4h-7z M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM18 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol id="i-wallet" viewBox="0 0 24 24">
+        <path
+          d="M4 5h16a2 2 0 0 1 2 2v12H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14 M2 8h20 M16 14h2"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24">
+        <path
+          d="M3 3v18h18 M8 15l4-5 4 3 5-7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24">
+        <path
+          d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9 M10 21h4"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+        />
+      </symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24">
+        <path
+          d="M12 5v14 M5 12h14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24">
+        <path
+          d="M7 17 17 7 M7 7h10v10"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol id="i-file" viewBox="0 0 24 24">
+        <path
+          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M8 13h8 M8 17h8"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24">
+        <circle
+          cx="12"
+          cy="12"
+          r="9"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        />
+        <path
+          d="M12 7v5l3 2"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+        />
+      </symbol>
+      <symbol id="i-search" viewBox="0 0 24 24">
+        <circle
+          cx="11"
+          cy="11"
+          r="7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        />
+        <path
+          d="m16 16 5 5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+        />
+      </symbol>
+    </svg>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">
+            <svg><use href="#i-boxes" /></svg>
+          </div>
+          <div>
+            <div class="brand-name">پخش‌یار</div>
+            <div class="brand-caption">مدیریت هوشمند پخش و فروش</div>
+          </div>
+        </div>
+        <div>
+          <div class="nav-label">مدیریت کسب‌وکار</div>
+          <nav class="nav">
+            <button class="nav-btn active" data-page="dashboard">
+              <svg><use href="#i-grid" /></svg>نمای کلی
+            </button>
+            <button class="nav-btn" data-page="orders">
+              <svg><use href="#i-cart" /></svg>سفارش‌ها
+            </button>
+            <button class="nav-btn" data-page="customers">
+              <svg><use href="#i-users" /></svg>مشتریان و حساب‌ها
+            </button>
+            <button class="nav-btn" data-page="inventory">
+              <svg><use href="#i-package" /></svg>انبار و کالاها
+            </button>
+            <button class="nav-btn" data-page="delivery">
+              <svg><use href="#i-truck" /></svg>ارسال و توزیع
+            </button>
+            <button class="nav-btn" data-page="finance">
+              <svg><use href="#i-wallet" /></svg>امور مالی
+            </button>
+          </nav>
+        </div>
+        <div>
+          <div class="nav-label">گزارش‌ها</div>
+          <nav class="nav">
+            <button class="nav-btn" data-page="reports">
+              <svg><use href="#i-chart" /></svg>گزارش عملکرد
+            </button>
+          </nav>
+        </div>
+        <div class="sidebar-bottom">
+          <span class="demo-pill"
+            ><span class="demo-dot"></span>نسخه نمایشی</span
+          >
+          <p>
+            این محیط برای معرفی امکانات محصول آماده شده است. اطلاعات آن نمونه
+            است.
+          </p>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div class="mobile-brand">
+            <div class="brand-mark">
+              <svg><use href="#i-boxes" /></svg>
+            </div>
+            پخش‌یار
+          </div>
+          <div class="breadcrumb">
+            <span>پخش‌یار</span><span>‹</span
+            ><strong id="crumb">نمای کلی</strong>
+          </div>
+          <div class="top-actions">
+            <button
+              class="icon-btn"
+              aria-label="اعلان‌ها"
+              onclick="toast('در حال حاضر اعلان جدیدی ندارید.')"
+            >
+              <svg><use href="#i-bell" /></svg
+              ><span class="notification-dot"></span>
+            </button>
+            <div class="profile">
+              <div class="avatar">م</div>
+              <div class="profile-info">
+                <div class="profile-name">مدیر شرکت</div>
+                <div class="profile-role">مدیریت کل</div>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div class="content">
+          <section class="page-view active" id="page-dashboard">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">شنبه، ۵ آبان ۱۴۰۵</div>
+                <h1>روز بخیر، مدیر عزیز 👋</h1>
+                <p class="subtitle">این خلاصه‌ای از وضعیت امروز شرکت شماست.</p>
+              </div>
+              <button class="primary-btn" onclick="openOrderModal()">
+                <svg><use href="#i-plus" /></svg>ثبت سفارش جدید
+              </button>
+            </div>
+            <div class="stats">
+              <article class="stat-card">
+                <div class="stat-top">
+                  <div class="stat-icon i-green">
+                    <svg><use href="#i-chart" /></svg>
+                  </div>
+                  <span class="trend">↗ ۱۲.۸٪</span>
+                </div>
+                <div class="stat-label">فروش ثبت‌شده این ماه</div>
+                <div class="stat-value">۳۶۴,۰۰۰,۰۰۰</div>
+                <div class="stat-foot">تومان · نسبت به ماه قبل</div>
+              </article>
+              <article class="stat-card">
+                <div class="stat-top">
+                  <div class="stat-icon i-blue">
+                    <svg><use href="#i-cart" /></svg>
+                  </div>
+                  <span class="trend">+ ۸ سفارش</span>
+                </div>
+                <div class="stat-label">کل سفارش‌ها</div>
+                <div class="stat-value" id="stat-orders">۱۲۸</div>
+                <div class="stat-foot">در بازه انتخاب‌شده</div>
+              </article>
+              <article class="stat-card">
+                <div class="stat-top">
+                  <div class="stat-icon i-amber">
+                    <svg><use href="#i-wallet" /></svg>
+                  </div>
+                  <span
+                    style="
+                      color: var(--amber);
+                      font-size: 11px;
+                      font-weight: 700;
+                    "
+                    >نیازمند پیگیری</span
+                  >
+                </div>
+                <div class="stat-label">مانده حساب مشتریان</div>
+                <div class="stat-value" id="stat-debt">۳۰,۱۰۰,۰۰۰</div>
+                <div class="stat-foot">تومان · مجموع بدهی‌ها</div>
+              </article>
+              <article class="stat-card">
+                <div class="stat-top">
+                  <div class="stat-icon i-red">
+                    <svg><use href="#i-package" /></svg>
+                  </div>
+                  <span
+                    style="color: var(--red); font-size: 11px; font-weight: 700"
+                    >هشدار موجودی</span
+                  >
+                </div>
+                <div class="stat-label">کالاهای رو به اتمام</div>
+                <div class="stat-value" id="stat-low">۲</div>
+                <div class="stat-foot">نیازمند بررسی و تأمین</div>
+              </article>
+            </div>
+            <div class="dashboard-grid">
+              <section class="panel">
+                <div class="panel-header">
+                  <div>
+                    <h2 class="panel-title">روند فروش</h2>
+                    <div class="panel-subtitle">مقایسه عملکرد در طول هفته</div>
+                  </div>
+                  <select
+                    class="select-small"
+                    id="chart-period"
+                    aria-label="بازه نمودار"
+                  >
+                    <option value="week">این هفته</option>
+                    <option value="month">این ماه</option>
+                  </select>
+                </div>
+                <div class="panel-body">
+                  <div class="chart-summary">
+                    <span class="chart-total" id="chart-total">۸۶,۴۰۰,۰۰۰</span
+                    ><span class="chart-change">↗ ۱۲.۸٪ رشد</span
+                    ><span class="form-help">تومان</span>
+                  </div>
+                  <div class="chart" id="sales-chart"></div>
+                  <div class="chart-legend">
+                    <span><i class="legend-dot"></i>فروش این دوره</span
+                    ><span><i class="legend-dot pale"></i>دوره قبل</span>
+                  </div>
+                </div>
+              </section>
+              <section class="panel">
+                <div class="panel-header">
+                  <div>
+                    <h2 class="panel-title">نیازمند رسیدگی</h2>
+                    <div class="panel-subtitle">
+                      کارهایی که بهتر است امروز انجام شوند
+                    </div>
+                  </div>
+                  <span
+                    class="demo-pill"
+                    style="
+                      color: var(--amber);
+                      background: #fff6e7;
+                      border-color: #f4e5c9;
+                    "
+                    >۳ مورد</span
+                  >
+                </div>
+                <div class="panel-body">
+                  <div class="task-list">
+                    <div class="task">
+                      <div class="task-icon">
+                        <svg><use href="#i-truck" /></svg>
+                      </div>
+                      <div class="task-content">
+                        <div class="task-title">سفارش آماده ارسال</div>
+                        <div class="task-desc">در انتظار تحویل به راننده</div>
+                      </div>
+                      <span class="task-count" id="ready-count">۲</span>
+                    </div>
+                    <div class="task">
+                      <div
+                        class="task-icon"
+                        style="color: var(--amber); background: #fff5e6"
+                      >
+                        <svg><use href="#i-wallet" /></svg>
+                      </div>
+                      <div class="task-content">
+                        <div class="task-title">پیگیری مطالبات</div>
+                        <div class="task-desc">مشتریان دارای مانده حساب</div>
+                      </div>
+                      <span class="task-count" id="debt-count">۳</span>
+                    </div>
+                    <div class="task">
+                      <div
+                        class="task-icon"
+                        style="color: var(--red); background: #fff0ef"
+                      >
+                        <svg><use href="#i-package" /></svg>
+                      </div>
+                      <div class="task-content">
+                        <div class="task-title">موجودی پایین کالا</div>
+                        <div class="task-desc">
+                          کالاهایی که به تأمین نیاز دارند
+                        </div>
+                      </div>
+                      <span class="task-count" id="low-count">۲</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <div class="quick-actions">
+              <button class="quick-action" onclick="openOrderModal()">
+                <span class="quick-icon"
+                  ><svg><use href="#i-plus" /></svg></span
+                ><span
+                  ><div class="quick-title">ثبت سفارش جدید</div>
+                  <div class="quick-desc">
+                    سفارش مشتری را در چند مرحله ثبت کنید
+                  </div></span
+                ></button
+              ><button class="quick-action" onclick="navigate('customers')">
+                <span
+                  class="quick-icon"
+                  style="background: #fff2df; color: #b45309"
+                  ><svg><use href="#i-users" /></svg></span
+                ><span
+                  ><div class="quick-title">بررسی حساب مشتریان</div>
+                  <div class="quick-desc">مشاهده بدهی و سابقه مشتری</div></span
+                ></button
+              ><button class="quick-action" onclick="navigate('inventory')">
+                <span
+                  class="quick-icon"
+                  style="background: #dbeafe; color: #2563eb"
+                  ><svg><use href="#i-package" /></svg></span
+                ><span
+                  ><div class="quick-title">کنترل موجودی انبار</div>
+                  <div class="quick-desc">
+                    بررسی کالاهای موجود و کم‌موجود
+                  </div></span
+                >
+              </button>
+            </div>
+            <section class="panel table-panel">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">آخرین سفارش‌ها</h2>
+                  <div class="panel-subtitle">
+                    نمایی از آخرین فعالیت‌های ثبت‌شده
+                  </div>
+                </div>
+                <button class="table-link" onclick="navigate('orders')">
+                  مشاهده همه سفارش‌ها ←
+                </button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>شماره سفارش</th>
+                      <th>مشتری</th>
+                      <th>تاریخ ثبت</th>
+                      <th>مبلغ نهایی</th>
+                      <th>وضعیت</th>
+                      <th>عملیات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-orders"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+          <section class="page-view" id="page-orders">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">فروش و سفارش‌گیری</div>
+                <h1>مدیریت سفارش‌ها</h1>
+                <p class="subtitle">
+                  سفارش‌ها را ثبت کنید و از وضعیت آن‌ها مطلع بمانید.
+                </p>
+              </div>
+              <button class="primary-btn" onclick="openOrderModal()">
+                <svg><use href="#i-plus" /></svg>ثبت سفارش جدید
+              </button>
+            </div>
+            <section class="panel table-panel">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">همه سفارش‌ها</h2>
+                  <div class="panel-subtitle" id="orders-count">
+                    ۴ سفارش ثبت شده
+                  </div>
+                </div>
+              </div>
+              <div class="list-toolbar">
+                <input
+                  class="search"
+                  id="order-search"
+                  placeholder="جست‌وجوی شماره سفارش یا نام مشتری..."
+                  aria-label="جست‌وجوی سفارش"
+                /><select class="select-small" id="status-filter">
+                  <option value="">همه وضعیت‌ها</option>
+                  <option>آماده ارسال</option>
+                  <option>در حال ارسال</option>
+                  <option>تحویل‌شده</option>
+                </select>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>شماره سفارش</th>
+                      <th>مشتری</th>
+                      <th>تاریخ ثبت</th>
+                      <th>مبلغ نهایی</th>
+                      <th>وضعیت</th>
+                      <th>عملیات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="all-orders"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+          <section class="page-view" id="page-customers">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">ارتباط با مشتریان</div>
+                <h1>مشتریان و حساب‌ها</h1>
+                <p class="subtitle">
+                  اطلاعات مشتریان و مانده حساب آن‌ها در یک نگاه.
+                </p>
+              </div>
+              <button class="primary-btn" onclick="openCustomerModal()">
+                <svg><use href="#i-plus" /></svg>افزودن مشتری
+              </button>
+            </div>
+            <section class="panel table-panel">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">دفتر مشتریان</h2>
+                  <div class="panel-subtitle">اطلاعات تماس و وضعیت حساب</div>
+                </div>
+              </div>
+              <div class="list-toolbar">
+                <input
+                  class="search"
+                  id="customer-search"
+                  placeholder="جست‌وجوی نام یا شماره تماس..."
+                  aria-label="جست‌وجوی مشتری"
+                />
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>مشتری</th>
+                      <th>شماره تماس</th>
+                      <th>تعداد سفارش</th>
+                      <th>مانده حساب</th>
+                      <th>وضعیت</th>
+                      <th>عملیات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="customers-table"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+          <section class="page-view" id="page-inventory">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">مدیریت انبار</div>
+                <h1>انبار و کالاها</h1>
+                <p class="subtitle">
+                  موجودی کالا را بررسی کنید و ورود و خروج را ثبت کنید.
+                </p>
+              </div>
+              <button class="primary-btn" onclick="openProductModal()">
+                <svg><use href="#i-plus" /></svg>افزودن کالا
+              </button>
+            </div>
+            <section class="panel table-panel">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">فهرست کالاها</h2>
+                  <div class="panel-subtitle">موجودی فعلی و قیمت هر واحد</div>
+                </div>
+              </div>
+              <div class="list-toolbar">
+                <input
+                  class="search"
+                  id="product-search"
+                  placeholder="جست‌وجوی نام یا کد کالا..."
+                  aria-label="جست‌وجوی کالا"
+                />
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>نام کالا</th>
+                      <th>کد کالا</th>
+                      <th>موجودی</th>
+                      <th>قیمت واحد</th>
+                      <th>وضعیت موجودی</th>
+                      <th>عملیات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="products-table"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+          <section class="page-view" id="page-delivery">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">توزیع و ارسال</div>
+                <h1>ارسال و توزیع</h1>
+                <p class="subtitle">
+                  سفارش‌های در انتظار ارسال را تا زمان تحویل پیگیری کنید.
+                </p>
+              </div>
+            </div>
+            <section class="panel table-panel">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">سفارش‌های باز</h2>
+                  <div class="panel-subtitle">به‌روزرسانی وضعیت با یک کلیک</div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>شماره سفارش</th>
+                      <th>مشتری</th>
+                      <th>تاریخ ثبت</th>
+                      <th>مبلغ</th>
+                      <th>وضعیت</th>
+                      <th>عملیات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="delivery-table"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+          <section class="page-view" id="page-finance">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">حسابداری روزمره</div>
+                <h1>امور مالی</h1>
+                <p class="subtitle">دریافت وجه و پیگیری مانده حساب مشتریان.</p>
+              </div>
+              <button class="primary-btn" onclick="openPaymentModal()">
+                <svg><use href="#i-plus" /></svg>ثبت دریافت وجه
+              </button>
+            </div>
+            <div class="finance-banner">
+              <div>
+                <div class="label">مجموع مانده حساب مشتریان</div>
+                <div class="big" id="finance-debt">۳۰,۱۰۰,۰۰۰ تومان</div>
+              </div>
+              <div
+                class="stat-icon"
+                style="
+                  background: #ffffff1c;
+                  color: #fff;
+                  width: 54px;
+                  height: 54px;
+                "
+              >
+                <svg><use href="#i-wallet" /></svg>
+              </div>
+            </div>
+            <section class="panel table-panel">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">حساب مشتریان</h2>
+                  <div class="panel-subtitle">
+                    برای ثبت دریافتی، مشتری را انتخاب کنید.
+                  </div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>مشتری</th>
+                      <th>شماره تماس</th>
+                      <th>مانده حساب</th>
+                      <th>وضعیت</th>
+                      <th>عملیات</th>
+                    </tr>
+                  </thead>
+                  <tbody id="finance-table"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+          <section class="page-view" id="page-reports">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">گزارش و تحلیل</div>
+                <h1>گزارش عملکرد</h1>
+                <p class="subtitle">خلاصه‌ای از وضعیت فعلی اطلاعات نمونه.</p>
+              </div>
+            </div>
+            <div class="stats">
+              <article class="stat-card">
+                <div class="stat-label">تعداد مشتریان</div>
+                <div class="stat-value" id="report-customers">۴</div>
+              </article>
+              <article class="stat-card">
+                <div class="stat-label">تعداد کالاها</div>
+                <div class="stat-value" id="report-products">۴</div>
+              </article>
+              <article class="stat-card">
+                <div class="stat-label">تعداد سفارش‌ها</div>
+                <div class="stat-value" id="report-orders">۴</div>
+              </article>
+              <article class="stat-card">
+                <div class="stat-label">ارزش سفارش‌های ثبت‌شده</div>
+                <div class="stat-value" id="report-value">۳۶,۴۰۰,۰۰۰</div>
+                <div class="stat-foot">تومان · داده‌های دمو</div>
+              </article>
+            </div>
+            <section class="panel">
+              <div class="panel-header">
+                <div>
+                  <h2 class="panel-title">یادآوری</h2>
+                  <div class="panel-subtitle">
+                    این گزارش با داده‌های نمونه کار می‌کند.
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <p style="color: var(--muted); font-size: 13px">
+                  در نسخه عملیاتی می‌توان گزارش فروش، گردش موجودی، بدهی‌های
+                  سررسیدشده و عملکرد ویزیتورها را به این بخش اضافه کرد.
+                </p>
+              </div>
+            </section>
+          </section>
+          <div class="footer-note">
+            پخش‌یار · نسخه نمایشی محصول · تمام اطلاعات این صفحه نمونه هستند
+          </div>
+        </div>
+      </main>
+    </div>
+    <div
+      class="modal-backdrop"
+      id="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div class="modal">
+        <div class="modal-head">
+          <h2 id="modal-title">فرم</h2>
+          <button class="close-btn" onclick="closeModal()" aria-label="بستن">
+            ×
+          </button>
+        </div>
+        <form id="modal-form">
+          <div class="form-grid" id="modal-fields"></div>
+          <div class="modal-actions">
+            <button type="button" class="secondary-btn" onclick="closeModal()">
+              انصراف</button
+            ><button type="submit" class="primary-btn">ثبت اطلاعات</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script>
+      const $ = (s) => document.querySelector(s);
+      const $$ = (s) => [...document.querySelectorAll(s)];
+      const fmt = (n) => Math.round(n).toLocaleString("fa-IR");
+      const money = (n) => fmt(n) + " تومان";
+      const icon = (id) => `<svg><use href="#i-${id}"></use></svg>`;
+      let orders = [
+        {
+          id: "ORD-1048",
+          name: "فروشگاه بهار",
+          date: "امروز، ۱۰:۲۴",
+          amount: 12500000,
+          status: "آماده ارسال",
+        },
+        {
+          id: "ORD-1047",
+          name: "سوپرمارکت رضایی",
+          date: "امروز، ۰۹:۱۵",
+          amount: 8400000,
+          status: "در حال ارسال",
+        },
+        {
+          id: "ORD-1046",
+          name: "فروشگاه مرکزی",
+          date: "امروز، ۰۸:۴۰",
+          amount: 6300000,
+          status: "تحویل‌شده",
+        },
+        {
+          id: "ORD-1045",
+          name: "فروشگاه مهدی",
+          date: "دیروز، ۱۶:۳۰",
+          amount: 9200000,
+          status: "تحویل‌شده",
+        },
+      ];
+      let customers = [
+        {
+          name: "فروشگاه بهار",
+          phone: "۰۹۱۵۱۲۳۴۵۶۷",
+          debt: 12500000,
+          count: 24,
+        },
+        {
+          name: "سوپرمارکت رضایی",
+          phone: "۰۹۱۵۹۸۷۶۵۴۳",
+          debt: 8400000,
+          count: 18,
+        },
+        { name: "فروشگاه مرکزی", phone: "۰۹۱۵۱۱۱۲۲۳۳", debt: 0, count: 32 },
+        {
+          name: "فروشگاه مهدی",
+          phone: "۰۹۱۵۲۲۲۳۳۴۴",
+          debt: 9200000,
+          count: 12,
+        },
+      ];
+      let products = [
+        {
+          name: "روغن مایع آفتابگردان",
+          sku: "PR-001",
+          stock: 18,
+          unit: "کارتن",
+          price: 1250000,
+        },
+        {
+          name: "رب گوجه‌فرنگی",
+          sku: "PR-002",
+          stock: 7,
+          unit: "کارتن",
+          price: 780000,
+        },
+        {
+          name: "دستمال کاغذی",
+          sku: "PR-003",
+          stock: 42,
+          unit: "بسته",
+          price: 210000,
+        },
+        {
+          name: "مایع ظرفشویی",
+          sku: "PR-004",
+          stock: 3,
+          unit: "کارتن",
+          price: 640000,
+        },
+      ];
+      let nextOrder = 1049,
+        nextProduct = 5;
+      function toast(message) {
+        const el = $("#toast");
+        el.textContent = message;
+        el.classList.add("show");
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => el.classList.remove("show"), 3000);
+      }
+      function navigate(page) {
+        $$(".page-view").forEach((el) =>
+          el.classList.toggle("active", el.id === "page-" + page),
+        );
+        $$(".nav-btn").forEach((el) =>
+          el.classList.toggle("active", el.dataset.page === page),
+        );
+        const names = {
+          dashboard: "نمای کلی",
+          orders: "سفارش‌ها",
+          customers: "مشتریان و حساب‌ها",
+          inventory: "انبار و کالاها",
+          delivery: "ارسال و توزیع",
+          finance: "امور مالی",
+          reports: "گزارش عملکرد",
+        };
+        $("#crumb").textContent = names[page] || "نمای کلی";
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      $$(".nav-btn").forEach((btn) =>
+        btn.addEventListener("click", () => navigate(btn.dataset.page)),
+      );
+      function statusClass(s) {
+        return s === "تحویل‌شده"
+          ? "done"
+          : s === "در حال ارسال"
+            ? "transit"
+            : "ready";
+      }
+      function statusHTML(s) {
+        return `<span class="status ${statusClass(s)}">${s}</span>`;
+      }
+      function avatarName(name) {
+        return name
+          .replace("فروشگاه ", "")
+          .replace("سوپرمارکت ", "")
+          .trim()
+          .slice(0, 1);
+      }
+      function orderRows(list) {
+        if (!list.length)
+          return '<tr><td colspan="6" class="empty">موردی پیدا نشد.</td></tr>';
+        return list
+          .map(
+            (o) =>
+              `<tr><td><span class="order-id">${o.id}</span></td><td><div class="customer-cell"><div class="customer-avatar">${avatarName(o.name)}</div><div><div class="customer-name">${o.name}</div><div class="customer-sub">مشتری ثبت‌شده</div></div></div></td><td>${o.date}</td><td class="amount">${fmt(o.amount)} تومان</td><td>${statusHTML(o.status)}</td><td>${o.status === "تحویل‌شده" ? '<span style="color:var(--muted)">تکمیل شده</span>' : `<button class="table-link" onclick="advanceOrder('${o.id}')">${o.status === "آماده ارسال" ? "شروع ارسال" : "ثبت تحویل"} ←</button>`}</td></tr>`,
+          )
+          .join("");
+      }
+      function renderOrders() {
+        const q = ($("#order-search")?.value || "").trim().toLowerCase(),
+          status = $("#status-filter")?.value || "";
+        const list = orders.filter(
+          (o) =>
+            (o.name.toLowerCase().includes(q) ||
+              o.id.toLowerCase().includes(q)) &&
+            (!status || o.status === status),
+        );
+        $("#all-orders").innerHTML = orderRows(list);
+        $("#recent-orders").innerHTML = orderRows(orders.slice(0, 4));
+        $("#orders-count").textContent = fmt(orders.length) + " سفارش ثبت شده";
+        $("#delivery-table").innerHTML = orderRows(
+          orders.filter((o) => o.status !== "تحویل‌شده"),
+        );
+      }
+      function renderCustomers() {
+        const q = ($("#customer-search")?.value || "").trim().toLowerCase();
+        const list = customers.filter((c) =>
+          (c.name + " " + c.phone).toLowerCase().includes(q),
+        );
+        const rows =
+          list
+            .map(
+              (c) =>
+                `<tr><td><div class="customer-cell"><div class="customer-avatar">${avatarName(c.name)}</div><span class="customer-name">${c.name}</span></div></td><td>${c.phone}</td><td>${fmt(c.count)} سفارش</td><td class="amount">${fmt(c.debt)} تومان</td><td>${c.debt ? '<span class="status ready">بدهکار</span>' : '<span class="status done">تسویه‌شده</span>'}</td><td>${c.debt ? `<button class="table-link" onclick="openPaymentModal('${c.name}')">ثبت دریافت ←</button>` : "—"}</td></tr>`,
+            )
+            .join("") ||
+          '<tr><td colspan="6" class="empty">مشتری پیدا نشد.</td></tr>';
+        $("#customers-table").innerHTML = rows;
+        const fin = customers
+          .map(
+            (c) =>
+              `<tr><td class="customer-name">${c.name}</td><td>${c.phone}</td><td class="amount">${fmt(c.debt)} تومان</td><td>${c.debt ? '<span class="status ready">بدهکار</span>' : '<span class="status done">تسویه‌شده</span>'}</td><td>${c.debt ? `<button class="table-link" onclick="openPaymentModal('${c.name}')">ثبت دریافت ←</button>` : "—"}</td></tr>`,
+          )
+          .join("");
+        $("#finance-table").innerHTML =
+          fin ||
+          '<tr><td colspan="5" class="empty">مشتری ثبت نشده است.</td></tr>';
+      }
+      function renderProducts() {
+        const q = ($("#product-search")?.value || "").trim().toLowerCase();
+        const list = products.filter((p) =>
+          (p.name + " " + p.sku).toLowerCase().includes(q),
+        );
+        $("#products-table").innerHTML =
+          list
+            .map(
+              (p) =>
+                `<tr><td class="customer-name">${p.name}</td><td><span class="order-id">${p.sku}</span></td><td class="${p.stock <= 7 ? "stock-low" : "stock-ok"}">${fmt(p.stock)} ${p.unit}</td><td class="amount">${fmt(p.price)} تومان</td><td>${p.stock <= 7 ? '<span class="status ready">موجودی کم</span>' : '<span class="status done">موجود</span>'}</td><td><button class="table-link" onclick="adjustStock('${p.sku}',1)">+ ورود</button> <button class="table-link" onclick="adjustStock('${p.sku}',-1)">− خروج</button></td></tr>`,
+            )
+            .join("") ||
+          '<tr><td colspan="6" class="empty">کالایی پیدا نشد.</td></tr>';
+      }
+      function renderChart() {
+        const month = $("#chart-period")?.value === "month";
+        const a = month
+          ? [35, 58, 42, 70, 51, 84, 65, 92, 55, 76, 62, 95]
+          : [45, 62, 38, 82, 54, 95, 68];
+        const b = month
+          ? [25, 43, 36, 52, 45, 63, 48, 72, 43, 58, 52, 68]
+          : [30, 46, 32, 59, 39, 68, 48];
+        $("#sales-chart").innerHTML = a
+          .map(
+            (v, i) =>
+              `<div class="chart-col"><div class="bar-wrap"><div class="bar" style="height:${b[i]}%"></div><div class="bar ${v === Math.max(...a) ? "strong" : ""}" style="height:${v}%"></div></div><div class="chart-label">${month ? ["۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹", "۱۰", "۱۱", "۱۲"][i] : ["ش", "ی", "د", "س", "چ", "پ", "ج"][i]}</div></div>`,
+          )
+          .join("");
+        $("#chart-total").textContent = month ? "۳۶۴,۰۰۰,۰۰۰" : "۸۶,۴۰۰,۰۰۰";
+      }
+      function renderStats() {
+        const debt = customers.reduce((s, c) => s + c.debt, 0);
+        $("#stat-debt").textContent = fmt(debt);
+        $("#stat-low").textContent = fmt(
+          products.filter((p) => p.stock <= 7).length,
+        );
+        $("#low-count").textContent = fmt(
+          products.filter((p) => p.stock <= 7).length,
+        );
+        $("#ready-count").textContent = fmt(
+          orders.filter((o) => o.status === "آماده ارسال").length,
+        );
+        $("#debt-count").textContent = fmt(
+          customers.filter((c) => c.debt > 0).length,
+        );
+        $("#stat-orders").textContent = fmt(128 + orders.length - 4);
+        $("#finance-debt").textContent = money(debt);
+        $("#report-customers").textContent = fmt(customers.length);
+        $("#report-products").textContent = fmt(products.length);
+        $("#report-orders").textContent = fmt(orders.length);
+        $("#report-value").textContent = fmt(
+          orders.reduce((s, o) => s + o.amount, 0),
+        );
+      }
+      function renderAll() {
+        renderOrders();
+        renderCustomers();
+        renderProducts();
+        renderStats();
+        renderChart();
+      }
+      $("#order-search").addEventListener("input", renderOrders);
+      $("#status-filter").addEventListener("change", renderOrders);
+      $("#customer-search").addEventListener("input", renderCustomers);
+      $("#product-search").addEventListener("input", renderProducts);
+      $("#chart-period").addEventListener("change", renderChart);
+      function advanceOrder(id) {
+        const o = orders.find((x) => x.id === id);
+        if (!o) return;
+        if (o.status === "آماده ارسال") o.status = "در حال ارسال";
+        else if (o.status === "در حال ارسال") o.status = "تحویل‌شده";
+        renderAll();
+        toast("وضعیت سفارش به‌روزرسانی شد.");
+      }
+      const backdrop = $("#modal-backdrop"),
+        fields = $("#modal-fields"),
+        form = $("#modal-form");
+      function openModal(title, fieldHTML, onSubmit) {
+        $("#modal-title").textContent = title;
+        fields.innerHTML = fieldHTML;
+        form.onsubmit = (e) => {
+          e.preventDefault();
+          const data = Object.fromEntries(new FormData(form).entries());
+          if (onSubmit(data) !== false) closeModal();
+        };
+        backdrop.classList.add("open");
+        setTimeout(() => fields.querySelector("input,select")?.focus(), 50);
+      }
+      function closeModal() {
+        backdrop.classList.remove("open");
+      }
+      backdrop.addEventListener("click", (e) => {
+        if (e.target === backdrop) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+      function openOrderModal() {
+        if (!customers.length || !products.length) {
+          toast("ابتدا یک مشتری و کالا ثبت کنید.");
+          return;
+        }
+        const opts = customers
+          .map((c) => `<option value="${c.name}">${c.name}</option>`)
+          .join("");
+        const pOpts = products
+          .map(
+            (p) =>
+              `<option value="${p.sku}">${p.name} · موجودی ${fmt(p.stock)} ${p.unit}</option>`,
+          )
+          .join("");
+        openModal(
+          "ثبت سفارش جدید",
+          `<div class="form-field"><label>مشتری</label><select name="customer" required>${opts}</select></div><div class="form-field"><label>کالا</label><select name="product" required>${pOpts}</select></div><div class="form-field"><label>تعداد</label><input type="number" name="qty" min="1" step="1" value="1" required><span class="form-help">موجودی کالا هنگام ثبت سفارش بررسی می‌شود.</span></div>`,
+          (d) => {
+            const p = products.find((x) => x.sku === d.product),
+              qty = Number(d.qty);
+            if (!p || !Number.isInteger(qty) || qty < 1) {
+              toast("تعداد واردشده معتبر نیست.");
+              return false;
+            }
+            if (qty > p.stock) {
+              toast("موجودی کالا کافی نیست.");
+              return false;
+            }
+            p.stock -= qty;
+            orders.unshift({
+              id: "ORD-" + nextOrder++,
+              name: d.customer,
+              date: "همین الان",
+              amount: p.price * qty,
+              status: "آماده ارسال",
+            });
+            const c = customers.find((x) => x.name === d.customer);
+            if (c) c.count++;
+            renderAll();
+            toast("سفارش با موفقیت در دمو ثبت شد.");
+            return true;
+          },
+        );
+      }
+      function openCustomerModal() {
+        openModal(
+          "افزودن مشتری",
+          `<div class="form-field"><label>نام فروشگاه یا مشتری</label><input name="name" required placeholder="مثلاً فروشگاه نمونه"></div><div class="form-field"><label>شماره تماس</label><input name="phone" required placeholder="09xxxxxxxxx" inputmode="tel"></div>`,
+          (d) => {
+            if (customers.some((c) => c.name.trim() === d.name.trim())) {
+              toast("این مشتری قبلاً ثبت شده است.");
+              return false;
+            }
+            customers.push({
+              name: d.name.trim(),
+              phone: d.phone.trim(),
+              debt: 0,
+              count: 0,
+            });
+            renderAll();
+            toast("مشتری جدید اضافه شد.");
+            return true;
+          },
+        );
+      }
+      function openProductModal() {
+        openModal(
+          "افزودن کالا",
+          `<div class="form-field"><label>نام کالا</label><input name="name" required placeholder="نام محصول"></div><div class="form-field"><label>واحد شمارش</label><select name="unit"><option>کارتن</option><option>عدد</option><option>بسته</option><option>کیلوگرم</option></select></div><div class="form-field"><label>موجودی اولیه</label><input name="stock" type="number" min="0" step="1" value="0" required></div><div class="form-field"><label>قیمت هر واحد (تومان)</label><input name="price" type="number" min="0" value="0" required></div>`,
+          (d) => {
+            products.push({
+              name: d.name.trim(),
+              sku: "PR-" + String(nextProduct++).padStart(3, "0"),
+              unit: d.unit,
+              stock: Number(d.stock),
+              price: Number(d.price),
+            });
+            renderAll();
+            toast("کالا به فهرست اضافه شد.");
+            return true;
+          },
+        );
+      }
+      function adjustStock(sku, delta) {
+        const p = products.find((x) => x.sku === sku);
+        if (!p) return;
+        if (delta < 0 && p.stock < 1) {
+          toast("موجودی کالا صفر است.");
+          return;
+        }
+        p.stock += delta;
+        renderAll();
+        toast(delta > 0 ? "ورود کالا ثبت شد." : "خروج کالا ثبت شد.");
+      }
+      function openPaymentModal(name) {
+        const c =
+          customers.find((x) => x.name === name) ||
+          customers.find((x) => x.debt > 0);
+        if (!c) {
+          toast("مشتری بدهکار برای ثبت دریافت وجود ندارد.");
+          return;
+        }
+        const opts = customers
+          .map(
+            (x) =>
+              `<option value="${x.name}" ${x.name === c.name ? "selected" : ""}>${x.name} · مانده ${fmt(x.debt)} تومان</option>`,
+          )
+          .join("");
+        openModal(
+          "ثبت دریافت وجه",
+          `<div class="form-field"><label>مشتری</label><select name="customer">${opts}</select></div><div class="form-field"><label>مبلغ دریافتی (تومان)</label><input name="amount" type="number" min="1" step="1" required placeholder="مبلغ را وارد کنید"></div><div class="form-field"><label>روش پرداخت</label><select name="method"><option>کارت‌خوان</option><option>نقدی</option><option>کارت به کارت</option><option>واریز بانکی</option></select></div>`,
+          (d) => {
+            const customer = customers.find((x) => x.name === d.customer),
+              amount = Number(d.amount);
+            if (!customer || !Number.isFinite(amount) || amount <= 0) {
+              toast("مبلغ معتبر وارد کنید.");
+              return false;
+            }
+            if (amount > customer.debt) {
+              toast("مبلغ از مانده حساب مشتری بیشتر است.");
+              return false;
+            }
+            customer.debt -= amount;
+            renderAll();
+            toast("دریافت وجه در دمو ثبت شد.");
+            return true;
+          },
+        );
+      }
+      renderAll();
+    </script>
+  </body>
+</html>
